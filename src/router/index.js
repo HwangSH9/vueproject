@@ -62,6 +62,11 @@ const routes = [
         path: '/oderpage',
         name: 'OderPage',
         component: () => import(/* webpackChunkName: "about" */ '../views/OderPage.vue')
+    },
+    {
+        path: '/signup',
+        name: 'SignUp',
+        component: () => import(/* webpackChunkName: "about" */ '../views/SignUp.vue')
     }
 ];
 

@@ -36,7 +36,7 @@
 
             <!-- 하단 로그인 링크 -->
             <footer class="footer">
-                <p>이미 회원이신가요? <a href="/login">로그인</a></p>
+                <p>이미 회원이신가요? <router-link to="/login">로그인</router-link></p>
             </footer>
         </div>
     </div>

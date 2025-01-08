@@ -67,7 +67,9 @@
                             />
                         </a>
                     </div>
-                    <h4>아직 회원이 아니신가요? <span>회원가입</span></h4>
+                    <h4>
+                        아직 회원이 아니신가요? <router-link to="/signup"><span>회원가입</span></router-link>
+                    </h4>
                 </div>
             </div>
         </div>
