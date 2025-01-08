@@ -359,6 +359,10 @@ body {
     margin-top: 29px;
 }
 
+.grayBox .loginWrap .login_box .loginBtn span[data-v-26084dc2] {
+    color: #fff;
+}
+
 .grayBox .loginWrap .login_box .line {
     width: 100%;
     min-width: 250px;
