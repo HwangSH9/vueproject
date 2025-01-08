@@ -33,8 +33,8 @@
                                 저장
                             </form>
                         </div>
-                        <button class="loginBtn" onclick="check_input()">
-                            <span>로그인</span>
+                        <button class="loginBtn">
+                            <router-link to="/logout"><span>로그인</span></router-link>
                         </button>
                     </form>
                     <div class="line"></div>
