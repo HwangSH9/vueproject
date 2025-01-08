@@ -80,9 +80,11 @@
                 </div>
             </div>
 
-            <div class="pay">
-                <button type="button" method="post" class="paybtn">결제하기</button>
-            </div>
+            <router-link to="/paymentcompleted">
+                <div class="pay">
+                    <button type="button" method="post" class="paybtn">결제하기</button>
+                </div>
+            </router-link>
         </div>
     </div>
 </template>
