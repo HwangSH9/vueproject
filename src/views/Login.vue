@@ -398,17 +398,26 @@ body {
 
 .grayBox .loginWrap .login_box h4 {
     margin-top: 30px;
-    font-size: 15px;
+    font-size: 14px;
     color: #484848;
     font-weight: 500;
+    text-align: center;
 }
 
 .grayBox .loginWrap .login_box h4 span {
-    font-weight: 900;
+    font-weight: bold;
     cursor: pointer;
+    color: black;
 }
 .grayBox .loginWrap .login_box h4 span:hover {
     text-decoration: underline;
+    color: black;
+}
+
+.grayBox .loginWrap .login_box h4 a {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .bgbg {
