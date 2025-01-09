@@ -3,10 +3,14 @@
         <div class="main">
             <div class="topWrap">
                 <div class="top_wrap">
+                    <img v-if="msg0 && typeof msg0 === 'string'" :src="msg0" alt="Space Image" class="header-space" />
                     <h1 v-html="msg"></h1>
                     <button class="back_left" @click="goBack">
                         <img src="@/assets/img/back_icon.png" alt="" />
                     </button>
+                    <h1 v-if="msg2" v-html="msg2" class="header-space2"></h1>
+                    <img v-if="msg3 && typeof msg3 === 'string'" :src="msg3" alt="Space Image3" class="header-space3" />
+                    <h1 v-if="msg4" v-html="msg4" class="header-space4"></h1>
                 </div>
             </div>
         </div>
@@ -16,7 +20,11 @@
 export default {
     name: 'Header',
     props: {
-        msg: String
+        msg0: String,   //space이미지
+        msg: String,    //가운데 텍스트
+        msg2: String,    //메뉴 카테고리
+        msg3: String,    //red_check.png
+        msg4: String    //아래 이미지는 실제와 다를 수 있습니다.
     },
     methods: {
         goBack() {
@@ -40,6 +48,38 @@ body {
     position: relative;
     /*  background-color: red; */
     margin-bottom: 60px;
+}
+
+.header-space{
+    position: absolute;
+    left: 21%;
+    transform: translate(-50%, 0);
+}
+
+.header-space2{
+    top: 145%;
+    color: #b3b3b3 !important;
+    font-size: 15px !important;
+}
+
+.header-space3{
+    position: absolute;
+    top: 200%;
+    transform: translate(85px, 47px);
+    z-index: 20;
+
+}
+
+.header-space4{
+    width: 300px;
+    position: absolute;
+    top: 380%;
+    transform: translate(100px, 50px);
+    z-index: 20;
+    color: #636363 !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.5px !important;
 }
 
 .main .topWrap .top_wrap h1 {
