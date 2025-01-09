@@ -24,11 +24,6 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
     },
     {
-        path: '/logout',
-        name: 'Logout',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Logout.vue')
-    },
-    {
         path: '/coupon',
         name: 'Coupon',
         component: () => import(/* webpackChunkName: "about" */ '../views/Coupon.vue')
@@ -58,11 +53,11 @@ const routes = [
         name: 'CartView',
         component: () => import(/* webpackChunkName: "about" */ '../views/CartView.vue')
     },
-    {
-        path: '/storesearch',
-        name: 'StoreSearch',
-        component: () => import(/* webpackChunkName: "about" */ '../views/StoreSearch.vue')
-    },
+    // {
+    //     path: '/storesearch',
+    //     name: 'StoreSearch',
+    //     component: () => import( '../views/StoreSearch.vue')
+    // },
     {
         path: '/oderpage',
         name: 'OderPage',
@@ -77,6 +72,11 @@ const routes = [
         path: '/foodnotice/:id',
         name: 'FoodNotice',
         component: () => import(/* webpackChunkName: "about" */ '../views/FoodNotice.vue')
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Logout.vue')
     }
 ];
 

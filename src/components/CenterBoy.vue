@@ -1,12 +1,11 @@
 <template>
     <div class="all_box">
-        <div class="all_wrap">
+        <div class="all_wrap" @click="closeCenterBoy">
             <h1>
                 아직<br />
                 주문 내역이<br />
                 없어요!
             </h1>
-            <img class="close" src="@/assets/img/usage_close.png" alt="usage_close" @click="closeCenterBoy" />
             <div class="btns_wrap">
                 <div class="leftBox" @click="delivery_page1">
                     <div class="delivery_btn1">배달<br />주문</div>

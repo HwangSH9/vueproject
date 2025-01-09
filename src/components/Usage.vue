@@ -1,7 +1,6 @@
 <template>
     <div class="all_box">
-        <div class="all_wrap">
-            <img class="close" src="@/assets/img/usage_close.png" alt="usage_close" @click="closeUsage" />
+        <div class="all_wrap" @click="closeUsage">
             <div class="btns_wrap">
                 <div class="leftBox">
                     <div class="delivery_btn1"></div>

@@ -5,7 +5,9 @@
             <div class="topimg_wrap">
                 <img class="top_img" :src="product.image" alt="Burger Image" />
             </div>
-            <button class="nutrition">알레르기 유발물질 / 영양성분</button>
+            <router-link :to="{ name: 'FoodNotice', params: { id: product.id } }"
+                ><button class="nutrition">알레르기 유발물질 / 영양성분</button></router-link
+            >
             <div class="menu_list">
                 <div class="product">
                     <img class="ham" :src="product.image" alt="hamburger_list" />

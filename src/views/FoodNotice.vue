@@ -7,8 +7,8 @@
                     <h1>원산지 표시판</h1>
                     <div class="box1">
                         <ul>
-                            <li>치즈버거: 호주산 쇠고기</li>
-                            <li>더블치즈버거: 호주산 쇠고기</li>
+                            <li>{{ product.title }}: {{ product.allergy }}</li>
+                            <!-- <li>더블치즈버거: 호주산 쇠고기</li>
                             <li>베이컨 토마토 디럭스: 호주산 쇠고기</li>
                             <li>맥스파이시: 태국산 돼지고기</li>
                             <li>스리라차마요: 태국산 닭고기</li>
@@ -16,7 +16,7 @@
                             <li>더블1955버거: 외국산 돼지고기</li>
                             <li>쿼터파운더: 호주산 쇠고기</li>
                             <li>에그 맥 머핀: 미국산 캐네디언베이컨</li>
-                            <li>맥스파이시 치킨텐더: 국내산 닭고기</li>
+                            <li>맥스파이시 치킨텐더: 국내산 닭고기</li> -->
                         </ul>
                     </div>
                 </div>
@@ -44,10 +44,31 @@
 
 <script>
 import Header from '@/components/Header.vue';
+import ham from '@/assets/ham';
+import { set } from '@/assets/set.js';
 export default {
     name: 'Login',
     components: {
         Header
+    },
+    data() {
+        return {
+            product: {},
+            Set: set
+        };
+    },
+    created() {
+        const productId = this.$route.params.id;
+        this.product = ham.find((Burger) => Burger.id === parseInt(productId));
+        if (!this.product) {
+            console.error('상품을 찾을 수 없습니다.');
+        }
+
+        // 세트 데이터 찾기
+        this.setData = set.find((item) => item.id === parseInt(productId));
+        if (!this.setData) {
+            console.error('세트를 찾을 수 없습니다.');
+        }
     }
 };
 </script>

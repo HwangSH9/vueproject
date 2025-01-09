@@ -1,34 +1,22 @@
 <!doctype html>
 <html lang="">
-
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-</head>
-
-<body>
-    <div id="app"></div>
-
-    <!-- 2. 스크립트 로드 -->
-    <script charset="UTF-8" class="daum_roughmap_loader_script"
-        src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-
-    <!-- 3. 실행 스크립트 -->
-    <script charset="UTF-8">
-        new daum.roughmap.Lander({
-            timestamp: "1736222859270",
-            key: "2mppk",
-            mapWidth: "375",
-            mapHeight: "217",
-        }).render();
-    </script>
-</body>
-
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <title><%= htmlWebpackPlugin.options.title %></title>
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <noscript>
+            <strong
+                >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript
+                enabled. Please enable it to continue.</strong
+            >
+        </noscript>
+        <div id="app"></div>
+        <!-- built files will be auto injected -->
+    </body>
 </html>

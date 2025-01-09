@@ -55,8 +55,15 @@
                     </div>
                 </div>
                 <div class="delivery_btns">
-                    <router-link to="/storesearch"><div class="delivery_btn1"></div></router-link>
-                    <div class="delivery_btn2"></div>
+                    <router-link to="#"
+                        ><div class="delivery_btn1">
+                            <h2>배달주문</h2>
+                            <img src="@/assets/img/b_btn_1.png" alt="b_btn_1" /></div
+                    ></router-link>
+                    <div class="delivery_btn2">
+                        <h2>매장픽업</h2>
+                        <img src="@/assets/img/b_btn_2.png" alt="b_btn_1" />
+                    </div>
                 </div>
                 <div class="best_menu_wrap">
                     <h2>메뉴추천</h2>
@@ -243,13 +250,37 @@ export default {
     left: 0;
     width: 47%;
     height: 106px;
+    /*     box-shadow: 2px 3px 4px 0px;
+    color: #ececec; */
+    border-radius: 15px;
     background-color: #d3d3d3;
+}
+
+.main .grayBox .delivery_btns .delivery_btn1 img,
+.main .grayBox .delivery_btns .delivery_btn2 img {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+}
+
+.main .grayBox .delivery_btns .delivery_btn1 h2,
+.main .grayBox .delivery_btns .delivery_btn2 h2 {
+    padding-top: 15px;
+    text-align: center;
+    color: #454545;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -1px;
 }
 
 .main .grayBox .delivery_btns .delivery_btn2 {
     position: absolute;
     right: 0;
+    border-radius: 15px;
     width: 47%;
+    /*     box-shadow: 2px 3px 4px 0px;
+    color: #c7b673; */
     height: 106px;
     background-color: #d3d3d3;
 }

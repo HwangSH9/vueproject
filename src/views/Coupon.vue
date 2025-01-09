@@ -1,6 +1,6 @@
 <template>
     <div class="bgbg">
-        <Header msg="쿠폰페이지" />
+        <Header msg="쿠폰" />
         <div class="grayBox">
             <button class="coupon_btn" type="button">+&nbsp;쿠폰등록</button>
             <div class="coupons">
