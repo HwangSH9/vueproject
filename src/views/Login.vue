@@ -4,69 +4,41 @@
         <div class="grayBox">
             <div class="loginWrap">
                 <div class="login_box">
-                    <form name="login_form" method="post">
+                    <form v-if="!isLoggedIn" @submit.prevent="login">
                         <ul>
                             <li>
                                 <p>아이디</p>
                                 <input
+                                    v-model="username"
                                     class="biginput"
                                     type="email"
                                     name="email"
                                     placeholder="이메일을 입력하세요"
-                                    value=""
+                                    required
+                                    :disabled="loading"
                                 />
                             </li>
                             <li>
                                 <p>비밀번호</p>
                                 <input
+                                    v-model="password"
                                     class="biginput last"
                                     type="password"
                                     name="password"
                                     placeholder="비밀번호(영문,숫자를 혼용하여 8자리 이상)"
-                                    value=""
+                                    required
                                 />
                             </li>
                         </ul>
                         <div class="checkbox">
-                            <form name="check" method="post">
-                                <input type="checkbox" />자동로그인 <input class="lastcheck" type="checkbox" />아이디
-                                저장
-                            </form>
+                            <input type="checkbox" />자동로그인 <input class="lastcheck" type="checkbox" />아이디 저장
                         </div>
-                        <button class="loginBtn">
-                            <router-link to="/logout"><span>로그인</span></router-link>
+                        <button class="loginBtn" type="submit" :disabled="loading" @click.prevent="login">
+                            {{ loading ? 'Logging in...' : 'Login' }}
                         </button>
                     </form>
                     <div class="line"></div>
                     <h3>간편 로그인</h3>
-                    <div class="easy_wrap">
-                        <a
-                            href="#"
-                            :class="{ active: activeButton === 'kakao' }"
-                            v-if="!isLoggedIn.kakao"
-                            @click="kakaoLogin"
-                        >
-                            <img :src="activeButton === 'kakao' ? imageSrc.kakaoActive : imageSrc.kakao" alt="카카오" />
-                        </a>
-                        <a
-                            href="#"
-                            :class="{ active: activeButton === 'naver' }"
-                            id="naverIdLogin"
-                            v-if="!isLoggedIn.naver"
-                        >
-                            <img :src="activeButton === 'naver' ? imageSrc.naverActive : imageSrc.naver" alt="네이버" />
-                        </a>
-                        <a
-                            v-if="!isLoggedIn.google"
-                            @click="googleLogin"
-                            :class="{ active: activeButton === 'google' }"
-                        >
-                            <img
-                                :src="activeButton === 'google' ? imageSrc.googleActive : imageSrc.google"
-                                alt="구글"
-                            />
-                        </a>
-                    </div>
                     <h4>
                         아직 회원이 아니신가요? <router-link to="/signup"><span>회원가입</span></router-link>
                     </h4>
@@ -77,8 +49,8 @@
 </template>
 
 <script>
+import axios from 'axios';
 import Header from '@/components/Header.vue';
-import { googleSdkLoaded } from 'vue3-google-login';
 export default {
     name: 'Login',
     components: {
@@ -86,184 +58,59 @@ export default {
     },
     data() {
         return {
-            imageSrc: {
-                kakao: require('@/assets/img/kakao.png'),
-                kakaoActive: require('@/assets/img/kakao_h.png'),
-                naver: require('@/assets/img/naver.png'),
-                naverActive: require('@/assets/img/naver_h.png'),
-                google: require('@/assets/img/google.png'),
-                googleActive: require('@/assets/img/google_h.png')
-            },
-            activeButton: null,
-            isLoggedIn: {
-                google: false,
-                kakao: false,
-                naver: false
-            },
-            naverLogin: null,
-            naverAccessToken: null
+            username: '',
+            password: '',
+            error: '',
+            loading: false, // 로딩 상태 추가
+            isLoggedIn: false // 로그인 상태 추가
         };
     },
-    mounted() {
-        // 카카오 SDK 초기화
-        if (!window.Kakao.isInitialized()) {
-            window.Kakao.init('8e11bcc192e20363d465210f81ef3846');
-        }
-
-        // 네이버 로그인 버튼 초기화
-        this.initializeNaverLoginButton();
+    created() {
+        // 컴포넌트가 로드될 때 localStorage에서 로그인 상태를 확인
+        this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     },
     methods: {
-        /** 구글 로그인 */
-        googleLogin() {
-            if (this.isLoggedIn.kakao || this.isLoggedIn.naver) {
-                alert('다른 계정으로 이미 로그인되어 있습니다. 먼저 로그아웃하세요.');
-                return;
-            }
-            googleSdkLoaded((google) => {
-                google.accounts.oauth2
-                    .initCodeClient({
-                        client_id: process.env.VUE_APP_OAUTH_CLIENT,
-                        scope: 'email profile openid',
-                        callback: (response) => {
-                            console.log('Google Login Response:', response);
-                            this.isLoggedIn.google = true;
-                        }
-                    })
-                    .requestCode();
-            });
-        },
-        googleLogout() {
-            console.log('Google Logout');
-            this.isLoggedIn.google = false;
-        },
+        async login() {
+            this.error = ''; // 이전 에러 초기화
+            this.loading = true; // 로딩 시작
 
-        /** 카카오 로그인 */
-        kakaoLogin() {
-            if (this.isLoggedIn.google || this.isLoggedIn.naver) {
-                alert('다른 계정으로 이미 로그인되어 있습니다. 먼저 로그아웃하세요.');
-                return;
-            }
-            window.Kakao.Auth.login({
-                scope: 'profile_image, profile_nickname',
-                success: this.getKakaoAccount
-            });
-        },
-        getKakaoAccount() {
-            window.Kakao.API.request({
-                url: '/v2/user/me',
-                success: (res) => {
-                    console.log('Kakao Login Response:', res);
-                    this.isLoggedIn.kakao = true;
-                },
-                fail: (error) => {
-                    alert('카카오 로그인 실패');
-                    console.error(error);
-                }
-            });
-        },
-        kakaoLogout() {
-            window.Kakao.Auth.logout(() => {
-                console.log('Kakao Logout');
-                this.isLoggedIn.kakao = false;
-            });
-        },
+            try {
+                // 로그인 요청
+                const response = await axios.post('/api/auth/login.php', {
+                    username: this.username,
+                    password: this.password
+                });
 
-        /** 네이버 로그인 */
-        initializeNaverLoginButton() {
-            if (this.isLoggedIn.google || this.isLoggedIn.kakao) {
-                alert('다른 계정으로 이미 로그인되어 있습니다. 먼저 로그아웃하세요.');
-                return;
-            }
-            this.naverLogin = new window.naver.LoginWithNaverId({
-                clientId: '3PhyCfpiTkqtOTMRweKL',
-                callbackUrl: 'http://localhost:8080/naverlogin',
-                isPopup: false,
-                loginButton: { color: 'green', type: 1, height: 35 }
-            });
-            this.naverLogin.init(); // 네이버 SDK 초기화
-
-            // 로그인 상태 확인
-            this.naverLogin.getLoginStatus((status) => {
-                if (status) {
-                    this.checkNaverLoginStatus();
-                }
-            });
-        },
-        checkNaverLoginStatus() {
-            // 네이버 로그인 상태 확인
-            this.naverLogin.getLoginStatus((status) => {
-                if (status) {
-                    // 로그인 성공 시 사용자 정보 및 상태 업데이트
-                    this.naverAccessToken = this.naverLogin.accessToken.accessToken;
-                    console.log('Naver Login Success:', this.naverLogin.user); // 사용자 정보 출력 (디버깅용)
-                    this.isLoggedIn.naver = true;
+                if (response.data.success) {
+                    this.isLoggedIn = true; // 로그인 상태 설정
+                    localStorage.setItem('isLoggedIn', 'true'); // 로그인 상태를 localStorage에 저장
+                    // 로그인 성공 시 메인 페이지로 이동
+                    this.$router.push('/');
+                    this.username = ''; // 입력 필드 초기화
+                    this.password = '';
                 } else {
-                    console.log('Naver Login Failed');
+                    // 서버에서 반환된 에러 메시지 표시
+                    this.error = response.data.message || 'Login failed';
                 }
-            });
-        },
-        naverLogout() {
-            if (!this.naverAccessToken) {
-                console.log('로그인 상태가 아닙니다.');
-                return;
+            } catch (err) {
+                console.error(err); // 디버깅을 위한 콘솔 출력
+                this.error = err.response?.data?.message || 'An unexpected error occurred';
+            } finally {
+                this.loading = false; // 로딩 종료
             }
-            // 네이버 로그아웃 URL
-            const logoutUrl = `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=q004iXc7eDC4DCkq6QnH&client_secret=Zw5Rcxe9Y9&access_token=${this.naverAccessToken}&service_provider=NAVER`;
-
-            // iframe을 사용하여 로그아웃 요청
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = logoutUrl;
-            document.body.appendChild(iframe);
-
-            // 로그아웃 처리 후 상태 초기화
-            this.naverAccessToken = null;
-            this.isLoggedIn.naver = false;
-
-            // DOM 업데이트 후 로그인 버튼 재초기화
-            this.$nextTick(() => {
-                this.initializeNaverLoginButton();
-            });
-            console.log('네이버 로그아웃 완료');
+        },
+        logout() {
+            this.isLoggedIn = false; // 로그아웃 상태 설정
+            localStorage.removeItem('isLoggedIn'); // localStorage에서 로그인 상태 제거
+            this.$router.push('/'); // 로그아웃 후 메인 페이지로 이동
         }
     }
 };
 </script>
+
 <style scoped>
 body {
     overflow-y: hidden;
-}
-
-.topWrap {
-    width: 100%;
-    min-width: 333px;
-    height: auto;
-    min-height: 23px;
-    position: relative;
-    /*  background-color: red; */
-    margin-bottom: 60px;
-}
-
-.topWrap .top_wrap h1 {
-    position: absolute;
-    text-align: left;
-    left: 50%;
-    transform: translate(-50%, 0);
-    font-size: 20px;
-    color: white;
-    font-weight: 700;
-    letter-spacing: -1px;
-}
-
-.top_wrap .back_left {
-    position: absolute;
-    top: -3px;
-    left: 0;
-    background-color: inherit;
-    border-radius: none;
-    border: none;
-    padding-left: 21px;
 }
 
 .grayBox {
@@ -287,7 +134,6 @@ body {
     height: auto;
     min-height: 314.2px;
     margin-top: 45px;
-    /*     background-color: blueviolet; */
 }
 
 .grayBox .loginWrap .login_box .biginput {
@@ -345,6 +191,7 @@ body {
 .grayBox .loginWrap .login_box .checkbox .lastcheck {
     margin-left: 25px;
 }
+
 .grayBox .loginWrap .login_box .loginBtn {
     width: 100%;
     min-width: 292px;
@@ -357,10 +204,6 @@ body {
     font-weight: 600;
     font-size: 15px;
     margin-top: 29px;
-}
-
-.grayBox .loginWrap .login_box .loginBtn span[data-v-26084dc2] {
-    color: #fff;
 }
 
 .grayBox .loginWrap .login_box .line {
@@ -380,26 +223,6 @@ body {
     margin-bottom: 10px;
 }
 
-.grayBox .loginWrap .login_box .easy_wrap {
-    width: 35%;
-    min-width: 117px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    z-index: 10; /* 클릭 가능하도록 보장 */
-    position: relative;
-}
-
-.grayBox .loginWrap .login_box .easy_wrap a {
-    display: inline-block;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.grayBox .loginWrap .login_box .easy_wrap img {
-    cursor: pointer;
-}
-
 .grayBox .loginWrap .login_box h4 {
     margin-top: 30px;
     font-size: 14px;
@@ -413,6 +236,7 @@ body {
     cursor: pointer;
     color: black;
 }
+
 .grayBox .loginWrap .login_box h4 span:hover {
     text-decoration: underline;
     color: black;
@@ -441,13 +265,5 @@ body {
 .login_box {
     pointer-events: auto; /* 모든 부모 요소 클릭 허용 */
     z-index: 10; /* 클릭 가능하도록 보장 */
-}
-
-/* 네이버 */
-#naverIdLogin .naver-login-button {
-    background-image: url('@/assets/img/naver.png') !important;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
 }
 </style>
