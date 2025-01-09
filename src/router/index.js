@@ -77,6 +77,16 @@ const routes = [
         path: '/logout',
         name: 'Logout',
         component: () => import(/* webpackChunkName: "about" */ '../views/Logout.vue')
+    },
+    {
+        path: '/registeredproductlist',
+        name: 'RegisteredProductList',
+        component: () => import(/* webpackChunkName: "about" */ '../views/RegisteredProductList.vue')
+    },
+    {
+        path: '/guestproductlist',
+        name: 'GuestProductList',
+        component: () => import(/* webpackChunkName: "about" */ '../views/GuestProductList.vue')
     }
 ];
 
