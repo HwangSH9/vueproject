@@ -3,7 +3,7 @@
         <div class="container">
             <Header :msg0="require('@/assets/img/space.png')" 
             :msg="'서울특별시 구로구 새말로 97'" 
-            :msg2="'햄버거'" :msg3="require('@/assets/img/red_check.png') " 
+            :msg2="'맥모닝 메뉴'" :msg3="require('@/assets/img/red_check.png') " 
             :msg4="'아래 이미지는 실제와 다를 수 있습니다.'" />
         </div>
 
@@ -16,7 +16,8 @@
                         <div
                             v-for="item in cartItems"
                             :key="item.id"
-                            class="cart-item p-3 mb-3 rounded-3 d-flex align-items-center cart-item-bg"
+                            class="cart-item p-3 mb-3 rounded-3 d-flex align-items-center cart-item-bg clickable"
+                            @click="goToDetail(item.id)"
                         >
                             <div class="d-flex align-items-center w-100">
                                 <div class="flex-grow-1">
@@ -39,7 +40,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import cartItems from '@/assets/ham.js';
+import cartItems from '@/assets/mcmorning.js';
 
 export default {
     name: 'RegisteredProductList',
@@ -51,15 +52,14 @@ export default {
             cartItems: []
         };
     },
-    computed: {
-        totalPrice() {
-            return this.cartItems.reduce((total, item) => total + item.priceNum * item.quantity, 0);
-        }
-    },
     created() {
         this.cartItems = cartItems; // ham.js에서 가져온 데이터를 컴포넌트에 설정
     },
     methods: {
+        goToDetail(itemId) {
+            // 선택된 아이템의 ID를 사용하여 Detail.vue로 이동
+            this.$router.push({ name: 'Detail', params: { id: itemId } });
+        }
     }
 };
 </script>
@@ -182,5 +182,9 @@ export default {
 .cart-item-bg {
     background-color: #d9d9d9 !important;
     border-radius: 8px;
+}
+
+.clickable{
+    cursor: pointer;
 }
 </style>
