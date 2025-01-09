@@ -3,19 +3,16 @@
         <Header msg="매장찾기" />
         <div class="store_serch_wrap">
             <form action="">
-                <input type="textarea" />
+                <input type="textarea" placeholder="매장명을 입력하세요" />
                 <button class="store_serch_btn" type="button">
                     <img src="@/assets/img/store_serch.png" alt="store_serch_btn" />
                 </button>
             </form>
         </div>
         <div class="grayBox">
-            <!-- "지도 퍼가기" HTML 코드 삽입 -->
+            <!-- 카카오 지도 렌더링 -->
             <div class="map_wrap">
-                <div
-                    id="daumRoughmapContainer1736222859270"
-                    class="root_daum_roughmap root_daum_roughmap_landing"
-                ></div>
+                <div id="map" style="width: 100%; height: 100%"></div>
             </div>
             <div class="text_wrap">
                 <h2>총 {{ stores.length }}개 매장</h2>
@@ -65,41 +62,53 @@ export default {
     components: {
         Header
     },
-    methods: {
-        toggleStar(index) {
-            this.stores[index].isStarClicked = !this.stores[index].isStarClicked;
-        }
-    },
     mounted() {
         this.loadKakaoMap();
     },
     methods: {
+        toggleStar(index) {
+            this.stores[index].isStarClicked = !this.stores[index].isStarClicked;
+        },
         loadKakaoMap() {
-            // 스크립트 중복 로드 방지
-            if (!document.querySelector('.daum_roughmap_loader_script')) {
+            // 카카오 지도 API 스크립트 동적 추가
+            if (!document.querySelector('#kakao-map-script')) {
                 const script = document.createElement('script');
-                script.src = 'https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js';
-                script.charset = 'UTF-8';
-                script.className = 'daum_roughmap_loader_script';
+                script.src =
+                    'https://dapi.kakao.com/v2/maps/sdk.js?appkey=122524454a55bf6e9efc3162d4333516&libraries=services';
+                script.async = true;
+                script.id = 'kakao-map-script';
                 document.head.appendChild(script);
-
                 script.onload = this.initKakaoMap;
             } else {
                 this.initKakaoMap();
             }
         },
         initKakaoMap() {
-            try {
-                // 카카오맵 초기화
-                new daum.roughmap.Lander({
-                    timestamp: '1736222859270',
-                    key: '2mppk', // 사용자가 제공한 Key
-                    mapWidth: '390',
-                    mapHeight: '230'
-                }).render();
-            } catch (error) {
-                console.error('카카오맵 초기화 중 오류 발생:', error);
-            }
+            const container = document.getElementById('map');
+            const options = {
+                center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 서울 좌표
+                level: 3
+            };
+            const map = new kakao.maps.Map(container, options);
+
+            // 현재 위치 가져오기
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude; // 위도
+                    const lng = position.coords.longitude; // 경도
+                    const currentLocation = new kakao.maps.LatLng(lat, lng); // 현재 위치 생성
+                    map.setCenter(currentLocation); // 지도의 중심을 현재 위치로 설정
+
+                    // 현재 위치 마커 추가
+                    const marker = new kakao.maps.Marker({
+                        position: currentLocation, // 현재 위치
+                        map: map // 지도에 표시
+                    });
+                },
+                (error) => {
+                    console.error('위치 정보를 가져올 수 없습니다:', error);
+                }
+            );
         }
     }
 };
