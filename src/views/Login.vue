@@ -33,40 +33,15 @@
                                 저장
                             </form>
                         </div>
-                        <button class="loginBtn">
-                            <router-link to="/logout"><span>로그인</span></router-link>
+                        <button class="loginBtn" onclick="check_input()">
+                            <span>로그인</span>
                         </button>
                     </form>
                     <div class="line"></div>
-                    <h3>간편 로그인</h3>
-                    <div class="easy_wrap">
-                        <a
-                            href="#"
-                            :class="{ active: activeButton === 'kakao' }"
-                            v-if="!isLoggedIn.kakao"
-                            @click="kakaoLogin"
-                        >
-                            <img :src="activeButton === 'kakao' ? imageSrc.kakaoActive : imageSrc.kakao" alt="카카오" />
-                        </a>
-                        <a
-                            href="#"
-                            :class="{ active: activeButton === 'naver' }"
-                            id="naverIdLogin"
-                            v-if="!isLoggedIn.naver"
-                        >
-                            <img :src="activeButton === 'naver' ? imageSrc.naverActive : imageSrc.naver" alt="네이버" />
-                        </a>
-                        <a
-                            v-if="!isLoggedIn.google"
-                            @click="googleLogin"
-                            :class="{ active: activeButton === 'google' }"
-                        >
-                            <img
-                                :src="activeButton === 'google' ? imageSrc.googleActive : imageSrc.google"
-                                alt="구글"
-                            />
-                        </a>
-                    </div>
+                    <h3>다른 계정으로 로그인</h3>
+                    <button class="easy_loginBtn" onclick="check_input()">
+                        <span>간편 로그인</span>
+                    </button>
                     <h4>
                         아직 회원이 아니신가요? <router-link to="/signup"><span>회원가입</span></router-link>
                     </h4>
@@ -359,10 +334,6 @@ body {
     margin-top: 29px;
 }
 
-.grayBox .loginWrap .login_box .loginBtn span[data-v-26084dc2] {
-    color: #fff;
-}
-
 .grayBox .loginWrap .login_box .line {
     width: 100%;
     min-width: 250px;
@@ -386,7 +357,7 @@ body {
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    z-index: 10; /* 클릭 가능하도록 보장 */
+    z-index: 10;
     position: relative;
 }
 
@@ -394,10 +365,6 @@ body {
     display: inline-block;
     cursor: pointer;
     z-index: 10;
-}
-
-.grayBox .loginWrap .login_box .easy_wrap img {
-    cursor: pointer;
 }
 
 .grayBox .loginWrap .login_box h4 {
@@ -411,17 +378,31 @@ body {
 .grayBox .loginWrap .login_box h4 span {
     font-weight: bold;
     cursor: pointer;
-    color: black;
+    color: #484848;
 }
 .grayBox .loginWrap .login_box h4 span:hover {
     text-decoration: underline;
-    color: black;
+    color: #484848;
 }
 
 .grayBox .loginWrap .login_box h4 a {
-    color: #000;
+    color: #484848;
     text-decoration: none;
     font-weight: bold;
+}
+
+.grayBox .loginWrap .login_box .easy_loginBtn {
+    width: 100%;
+    min-width: 292px;
+    height: auto;
+    min-height: 50px;
+    background-color: #7a7a7a;
+    border-radius: 6px;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 29px;
 }
 
 .bgbg {
