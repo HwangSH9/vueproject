@@ -53,11 +53,11 @@ const routes = [
         name: 'CartView',
         component: () => import(/* webpackChunkName: "about" */ '../views/CartView.vue')
     },
-    // {
-    //     path: '/storesearch',
-    //     name: 'StoreSearch',
-    //     component: () => import( '../views/StoreSearch.vue')
-    // },
+    {
+        path: '/storesearch',
+        name: 'StoreSearch',
+        component: () => import('../views/StoreSearch.vue')
+    },
     {
         path: '/oderpage',
         name: 'OderPage',
@@ -87,6 +87,16 @@ const routes = [
         path: '/guestproductlist',
         name: 'GuestProductList',
         component: () => import(/* webpackChunkName: "about" */ '../views/GuestProductList.vue')
+    },
+    {
+        path: '/detailcategory/:id',
+        name: 'DetailCategory',
+        component: () => import(/* webpackChunkName: "about" */ '../views/DetailCategory.vue')
+    },
+    {
+        path: '/foodnoticecat/:id',
+        name: 'FoodNoticeCat',
+        component: () => import(/* webpackChunkName: "about" */ '../views/FoodNoticeCat.vue')
     }
 ];
 

@@ -1,12 +1,14 @@
 <template>
     <div class="bgbg">
         <div class="container">
-            <Header :msg0="require('@/assets/img/space.png')" 
-            :msg="'서울특별시 구로구 새말로 97'" 
-            :msg2="'맥모닝 메뉴'" :msg3="require('@/assets/img/red_check.png') " 
-            :msg4="'아래 이미지는 실제와 다를 수 있습니다.'" />
+            <Header
+                :msg0="require('@/assets/img/space.png')"
+                :msg="'서울특별시 구로구 새말로 97'"
+                :msg2="'맥모닝 메뉴'"
+                :msg3="require('@/assets/img/red_check.png')"
+                :msg4="'아래 이미지는 실제와 다를 수 있습니다.'"
+            />
         </div>
-
 
         <div class="cart_bg">
             <div class="cart-page bg-light vh-100">
@@ -58,7 +60,7 @@ export default {
     methods: {
         goToDetail(itemId) {
             // 선택된 아이템의 ID를 사용하여 Detail.vue로 이동
-            this.$router.push({ name: 'Detail', params: { id: itemId } });
+            this.$router.push({ name: 'DetailCategory', params: { id: itemId } });
         }
     }
 };
@@ -75,32 +77,31 @@ export default {
     background-color: #494949;
 }
 
-.bg{
+.bg {
     width: 100%;
 }
 
-.container{
+.container {
     width: 100%;
 }
 
-.mt-4{
+.mt-4 {
     margin-top: 50px !important;
 }
 
 .icon {
     display: flex;
     align-items: center;
-  width: auto;
-  height: auto;
+    width: auto;
+    height: auto;
 }
 
 .main .topWrap .top_wrap {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
 }
-
 
 .cart_bg {
     width: 100%;
@@ -141,16 +142,11 @@ export default {
     overflow-y: scroll; /* 세로 스크롤 가능 */
     -ms-overflow-style: none; /* IE에서 스크롤바 숨김 */
     scrollbar-width: none; /* Firefox에서 스크롤바 숨김 */
-
 }
 
 .cart-list::-webkit-scrollbar {
     display: none; /* Chrome, Safari에서 스크롤바 숨김 */
 }
-
-
-
-
 
 .mb-2 {
     margin-top: 20px;
@@ -159,7 +155,7 @@ export default {
     font-weight: 600;
 }
 
-.mb-2 p{
+.mb-2 p {
     color: #636363;
 }
 
@@ -184,7 +180,7 @@ export default {
     border-radius: 8px;
 }
 
-.clickable{
+.clickable {
     cursor: pointer;
 }
 </style>

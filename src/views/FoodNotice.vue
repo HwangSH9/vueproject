@@ -47,7 +47,7 @@ import Header from '@/components/Header.vue';
 import ham from '@/assets/ham';
 import { set } from '@/assets/set.js';
 export default {
-    name: 'Login',
+    name: 'FoodNotice',
     components: {
         Header
     },

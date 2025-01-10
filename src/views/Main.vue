@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="delivery_btns">
-                    <router-link to="#"
+                    <router-link to="/storesearch"
                         ><div class="delivery_btn1">
                             <h2>배달주문</h2>
                             <img src="@/assets/img/b_btn_1.png" alt="b_btn_1" /></div

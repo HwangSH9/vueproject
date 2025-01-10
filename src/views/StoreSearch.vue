@@ -22,7 +22,24 @@
                 <div class="shape" v-for="(store, index) in stores" :key="index">
                     <div class="left_wrap">
                         <h1>{{ store.name }}</h1>
-                        <h2>현재날씨:</h2>
+                        <div class="weather-app">
+                            <div v-if="store.weather">
+                                <div class="weather-info">
+                                    <h2>
+                                        현재날씨:
+                                        <img
+                                            :src="store.weather.weatherIcon"
+                                            referrerpolicy="no-referrer"
+                                            alt="Weather Icon"
+                                        />
+                                        {{ store.weather.temp }}℃
+                                    </h2>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <p>날씨 정보를 불러오는 중...</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="right_wrap">
                         <button class="star_button" @click="toggleStar(index)">
@@ -41,6 +58,9 @@ import Header from '@/components/Header.vue';
 
 export default {
     name: 'StoreSerch',
+    components: {
+        Header
+    },
     data() {
         return {
             imageSrc: {
@@ -48,29 +68,53 @@ export default {
                 starActive: require('@/assets/img/store_star_click.png')
             },
             stores: [
-                { name: 'ABC점 매장', hours: '운영시간 9:00 ~ 21:00', isStarClicked: false },
-                { name: 'DEF점 매장', hours: '운영시간 10:00 ~ 20:00', isStarClicked: false },
-                { name: 'SF점 매장', hours: '운영시간 9:00 ~ 21:00', isStarClicked: false },
-                { name: 'Dfe점 매장', hours: '운영시간 10:00 ~ 20:00', isStarClicked: false },
-                { name: 'weffe점 매장', hours: '운영시간 10:00 ~ 20:00', isStarClicked: false },
-                { name: '123점 매장', hours: '운영시간 10:00 ~ 20:00', isStarClicked: false },
-                { name: '56563점 매장', hours: '운영시간 10:00 ~ 20:00', isStarClicked: false },
-                { name: '00점 매장', hours: '운영시간 10:00 ~ 20:00', isStarClicked: false }
+                {
+                    name: '신도림테크노마트점 매장',
+                    hours: '운영시간 9:00 ~ 21:00',
+                    lat: 37.5069735,
+                    lon: 126.8903193,
+                    isStarClicked: false
+                },
+                {
+                    name: '춘천후평DT점 매장',
+                    hours: '운영시간 10:00 ~ 20:00',
+                    lat: 37.8808856,
+                    lon: 127.7495263,
+                    isStarClicked: false
+                },
+                {
+                    name: '제주도남DT점 매장',
+                    hours: '운영시간 10:00 ~ 20:00',
+                    lat: 33.4804499,
+                    lon: 126.5275515,
+                    isStarClicked: false
+                },
+                {
+                    name: '속초DT점 매장',
+                    hours: '운영시간 9:00 ~ 21:00',
+                    lat: 38.1898497,
+                    lon: 128.5839333,
+                    isStarClicked: false
+                },
+                {
+                    name: '광주진월DT점 매장',
+                    hours: '운영시간 10:00 ~ 20:00',
+                    lat: 35.121637,
+                    lon: 126.8981948,
+                    isStarClicked: false
+                }
             ]
         };
     },
-    components: {
-        Header
-    },
     mounted() {
         this.loadKakaoMap();
+        this.fetchAllWeatherData(); // 모든 매장의 날씨 정보를 가져오기
     },
     methods: {
         toggleStar(index) {
             this.stores[index].isStarClicked = !this.stores[index].isStarClicked;
         },
         loadKakaoMap() {
-            // 카카오 지도 API 스크립트 동적 추가
             if (!document.querySelector('#kakao-map-script')) {
                 const script = document.createElement('script');
                 script.src =
@@ -86,29 +130,41 @@ export default {
         initKakaoMap() {
             const container = document.getElementById('map');
             const options = {
-                center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 서울 좌표
+                center: new kakao.maps.LatLng(37.5665, 126.978),
                 level: 3
             };
             const map = new kakao.maps.Map(container, options);
-
-            // 현재 위치 가져오기
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const lat = position.coords.latitude; // 위도
-                    const lng = position.coords.longitude; // 경도
-                    const currentLocation = new kakao.maps.LatLng(lat, lng); // 현재 위치 생성
-                    map.setCenter(currentLocation); // 지도의 중심을 현재 위치로 설정
-
-                    // 현재 위치 마커 추가
-                    const marker = new kakao.maps.Marker({
-                        position: currentLocation, // 현재 위치
-                        map: map // 지도에 표시
-                    });
-                },
-                (error) => {
-                    console.error('위치 정보를 가져올 수 없습니다:', error);
+        },
+        // 매장별 날씨 데이터를 가져오는 함수
+        async fetchWeatherData(lat, lon) {
+            try {
+                const apiKey = 'b56dd4e9365e5fb5abc59d76db48d6bf';
+                const weatherResponse = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=Metric`
+                );
+                const weatherData = await weatherResponse.json();
+                return {
+                    temp: weatherData.main.temp,
+                    weatherIcon: `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`,
+                    weatherDescription: weatherData.weather[0].description
+                };
+            } catch (error) {
+                console.error('날씨 데이터를 가져오는 중 오류 발생:', error);
+                return null;
+            }
+        },
+        async fetchAllWeatherData() {
+            // 모든 매장에 대해 날씨 데이터를 가져옴
+            for (const store of this.stores) {
+                const weatherInfo = await this.fetchWeatherData(store.lat, store.lon);
+                if (weatherInfo) {
+                    store.weather = {
+                        temp: weatherInfo.temp,
+                        weatherIcon: weatherInfo.weatherIcon,
+                        weatherDescription: weatherInfo.weatherDescription
+                    };
                 }
-            );
+            }
         }
     }
 };
@@ -266,6 +322,8 @@ body {
 .grayBox .coupons .shape .left_wrap h1 {
     font-size: 15px;
     font-weight: 600;
+    display: block;
+    width: 160px;
 }
 
 .grayBox .coupons .shape .left_wrap h2 {
@@ -273,6 +331,11 @@ body {
     font-weight: 600;
     bottom: -10px;
     position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 155px;
+    height: 20px;
 }
 
 .grayBox .coupons .shape .right_wrap {
@@ -318,5 +381,11 @@ body {
 .grayBox {
     pointer-events: auto; /* 모든 부모 요소 클릭 허용 */
     z-index: 10; /* 클릭 가능하도록 보장 */
+}
+
+/* 날씨 */
+h2 img {
+    width: 40px;
+    height: 40px;
 }
 </style>

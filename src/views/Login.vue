@@ -33,9 +33,11 @@
                                 저장
                             </form>
                         </div>
-                        <button class="loginBtn" onclick="check_input()">
-                            <span>로그인</span>
-                        </button>
+                        <router-link to="/logout">
+                            <button class="loginBtn">
+                                <span>로그인</span>
+                            </button>
+                        </router-link>
                     </form>
                     <div class="line"></div>
                     <h3>다른 계정으로 로그인</h3>
@@ -53,155 +55,10 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import { googleSdkLoaded } from 'vue3-google-login';
 export default {
     name: 'Login',
     components: {
         Header
-    },
-    data() {
-        return {
-            imageSrc: {
-                kakao: require('@/assets/img/kakao.png'),
-                kakaoActive: require('@/assets/img/kakao_h.png'),
-                naver: require('@/assets/img/naver.png'),
-                naverActive: require('@/assets/img/naver_h.png'),
-                google: require('@/assets/img/google.png'),
-                googleActive: require('@/assets/img/google_h.png')
-            },
-            activeButton: null,
-            isLoggedIn: {
-                google: false,
-                kakao: false,
-                naver: false
-            },
-            naverLogin: null,
-            naverAccessToken: null
-        };
-    },
-    mounted() {
-        // 카카오 SDK 초기화
-        if (!window.Kakao.isInitialized()) {
-            window.Kakao.init('8e11bcc192e20363d465210f81ef3846');
-        }
-
-        // 네이버 로그인 버튼 초기화
-        this.initializeNaverLoginButton();
-    },
-    methods: {
-        /** 구글 로그인 */
-        googleLogin() {
-            if (this.isLoggedIn.kakao || this.isLoggedIn.naver) {
-                alert('다른 계정으로 이미 로그인되어 있습니다. 먼저 로그아웃하세요.');
-                return;
-            }
-            googleSdkLoaded((google) => {
-                google.accounts.oauth2
-                    .initCodeClient({
-                        client_id: process.env.VUE_APP_OAUTH_CLIENT,
-                        scope: 'email profile openid',
-                        callback: (response) => {
-                            console.log('Google Login Response:', response);
-                            this.isLoggedIn.google = true;
-                        }
-                    })
-                    .requestCode();
-            });
-        },
-        googleLogout() {
-            console.log('Google Logout');
-            this.isLoggedIn.google = false;
-        },
-
-        /** 카카오 로그인 */
-        kakaoLogin() {
-            if (this.isLoggedIn.google || this.isLoggedIn.naver) {
-                alert('다른 계정으로 이미 로그인되어 있습니다. 먼저 로그아웃하세요.');
-                return;
-            }
-            window.Kakao.Auth.login({
-                scope: 'profile_image, profile_nickname',
-                success: this.getKakaoAccount
-            });
-        },
-        getKakaoAccount() {
-            window.Kakao.API.request({
-                url: '/v2/user/me',
-                success: (res) => {
-                    console.log('Kakao Login Response:', res);
-                    this.isLoggedIn.kakao = true;
-                },
-                fail: (error) => {
-                    alert('카카오 로그인 실패');
-                    console.error(error);
-                }
-            });
-        },
-        kakaoLogout() {
-            window.Kakao.Auth.logout(() => {
-                console.log('Kakao Logout');
-                this.isLoggedIn.kakao = false;
-            });
-        },
-
-        /** 네이버 로그인 */
-        initializeNaverLoginButton() {
-            if (this.isLoggedIn.google || this.isLoggedIn.kakao) {
-                alert('다른 계정으로 이미 로그인되어 있습니다. 먼저 로그아웃하세요.');
-                return;
-            }
-            this.naverLogin = new window.naver.LoginWithNaverId({
-                clientId: '3PhyCfpiTkqtOTMRweKL',
-                callbackUrl: 'http://localhost:8080/naverlogin',
-                isPopup: false,
-                loginButton: { color: 'green', type: 1, height: 35 }
-            });
-            this.naverLogin.init(); // 네이버 SDK 초기화
-
-            // 로그인 상태 확인
-            this.naverLogin.getLoginStatus((status) => {
-                if (status) {
-                    this.checkNaverLoginStatus();
-                }
-            });
-        },
-        checkNaverLoginStatus() {
-            // 네이버 로그인 상태 확인
-            this.naverLogin.getLoginStatus((status) => {
-                if (status) {
-                    // 로그인 성공 시 사용자 정보 및 상태 업데이트
-                    this.naverAccessToken = this.naverLogin.accessToken.accessToken;
-                    console.log('Naver Login Success:', this.naverLogin.user); // 사용자 정보 출력 (디버깅용)
-                    this.isLoggedIn.naver = true;
-                } else {
-                    console.log('Naver Login Failed');
-                }
-            });
-        },
-        naverLogout() {
-            if (!this.naverAccessToken) {
-                console.log('로그인 상태가 아닙니다.');
-                return;
-            }
-            // 네이버 로그아웃 URL
-            const logoutUrl = `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=q004iXc7eDC4DCkq6QnH&client_secret=Zw5Rcxe9Y9&access_token=${this.naverAccessToken}&service_provider=NAVER`;
-
-            // iframe을 사용하여 로그아웃 요청
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = logoutUrl;
-            document.body.appendChild(iframe);
-
-            // 로그아웃 처리 후 상태 초기화
-            this.naverAccessToken = null;
-            this.isLoggedIn.naver = false;
-
-            // DOM 업데이트 후 로그인 버튼 재초기화
-            this.$nextTick(() => {
-                this.initializeNaverLoginButton();
-            });
-            console.log('네이버 로그아웃 완료');
-        }
     }
 };
 </script>

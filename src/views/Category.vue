@@ -14,12 +14,12 @@
         <div class="grayBox">
             <h2><span>※</span>&nbsp;판매되는 상품은 매장마다 상이합니다.</h2>
             <div class="product_wrap">
-                <div class="product"><a href="#">추천메뉴</a></div>
-                <div class="product"><a href="#">추천메뉴</a></div>
-                <div class="product"><a href="#">추천메뉴</a></div>
-                <div class="product"><a href="#">추천메뉴</a></div>
-                <div class="product"><a href="#">추천메뉴</a></div>
-                <div class="product"><a href="#">추천메뉴</a></div>
+                <router-link to="/guestproductlist"><span>추천메뉴</span></router-link>
+                <div class="product">버거&세트</div>
+                <div class="product">스낵&사이드</div>
+                <div class="product">음료</div>
+                <div class="product">디저트</div>
+                <div class="product">해피밀</div>
             </div>
         </div>
     </div>
@@ -137,16 +137,29 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.grayBox .product_wrap .product a {
     text-decoration: none;
     color: #494949;
     font-size: 20px;
     font-weight: 900;
     text-align: center;
-    display: block;
-    width: 100%;
+}
+
+.grayBox .product_wrap a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48%;
+    min-width: 164px;
+    height: 35%;
+    min-height: 133px;
+    margin-bottom: 15px;
+    border-radius: 20px;
+    background-color: yellowgreen;
+    text-decoration: none;
+    color: #494949;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
 }
 
 .bgbg {
