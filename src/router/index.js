@@ -97,7 +97,22 @@ const routes = [
         path: '/foodnoticecat/:id',
         name: 'FoodNoticeCat',
         component: () => import(/* webpackChunkName: "about" */ '../views/FoodNoticeCat.vue')
-    }
+    },
+    {
+        path: '/cs',
+        name: 'Cs',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Cs.vue')
+    },
+    {
+        path: '/cspost',
+        name: 'CsPost',
+        component: () => import(/* webpackChunkName: "about" */ '../views/CsPost.vue')
+    },
+    {
+        path: '/faq',
+        name: 'Faq',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Faq.vue')
+    },
 ];
 
 const router = createRouter({
