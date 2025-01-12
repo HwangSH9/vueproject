@@ -19,11 +19,11 @@
                         <button class="kakao-login">
                             <img src="../assets/img/kakao_btn.png" alt="카카오" />
                         </button>
-                        <h4 class="login-links">
-                            <router-link to="/login"><span>아이디로 로그인 / </span></router-link>
-                            <router-link to="/signup"><span>회원가입</span></router-link>
-                        </h4>
                     </div>    
+                    <h4 class="login-links">
+                        <router-link to="/login"><span>아이디로 로그인 / </span></router-link>
+                        <router-link to="/signup"><span>회원가입</span></router-link>
+                    </h4>
                 </div>
             </div>
 </template>
@@ -228,62 +228,59 @@ h1 img {
     margin: 0 auto;
 }
 
-.login-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 100px;
-}
 
 .login_content h4 {
 }
 
-.social-buttons{
-    width: 90%;
+.social-buttons {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    gap: 10px; /* 버튼 간격 */
+    width: 100%;
 }
 
 .naver-login,
 .google-login,
-.kakao-login{
+.kakao-login {
     margin: 0;
     padding: 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: transparent; /* 배경 투명 */
+    width: 80%; /* 버튼의 고정 너비 설정 */
+    max-width: 300px; /* 최대 너비 제한 */
+    height: 50px; /* 고정 높이 설정 */
+    display: flex;
+    justify-content: flex-start; /* 내부 이미지도 왼쪽 정렬 */
+    align-items: center;
 }
 
-.social-buttons img{
-    width: 100% !important;
-    float: left !important;
-    height: 80px;
+.google-login img {
+    width: 100%;
 }
 
-.social-buttons img:nth-child(odd) {
-    margin-right:0
+.social-buttons img {
+    width: auto; /* 이미지가 버튼 크기에 맞게 조정 */
+    height: 100%; /* 이미지 높이를 버튼 높이에 맞춤 */
+    object-fit: contain;
+    margin: 0;
 }
 
-.social-buttons button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: transparent; /* 배경 투명 */
-}
 
 
 
 /* 하단 링크 */
 .login-links {
-  margin-top: 20px;
-  font-size: 14px;
-  color: #aaa;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #aaa;
+    text-align: center;
 }
 
 .login-links a {
-  color: #aaa;
-  text-decoration: none;
+    color: #aaa;
+    text-decoration: none;
 }
 </style>
