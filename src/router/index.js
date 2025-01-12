@@ -113,6 +113,11 @@ const routes = [
         name: 'Faq',
         component: () => import(/* webpackChunkName: "about" */ '../views/Faq.vue')
     },
+    {
+        path: '/sociallogin',
+        name: 'SocialLogin',
+        component: () => import(/* webpackChunkName: "about" */ '../views/SocialLogin.vue')
+    },
 ];
 
 const router = createRouter({
