@@ -121,7 +121,6 @@ body {
     height: auto;
     min-height: 314.2px;
     margin-top: 45px;
-    /*     background-color: blueviolet; */
 }
 
 .grayBox .loginWrap .login_box .biginput {
