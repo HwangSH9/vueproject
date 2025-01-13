@@ -147,6 +147,11 @@ body {
     text-decoration: none;
 }
 
+.grayBox .product_wrap .a:hover {
+    background-color: #7100a0;
+    color: white;
+}
+
 .grayBox .product_wrap .product:hover {
     background-color: #7100a0;
     color: white;
@@ -154,7 +159,7 @@ body {
 
 .grayBox .product_wrap .best_btn {
     width: 48%;
-    min-width: 224px;
+    min-width: 164px;
     height: 35%;
     min-height: 133px;
     margin-bottom: 15px;
