@@ -32,13 +32,6 @@
     </div>
 </template>
 
-<!-- <template>
-    <div class="splash-container" :class="{ 'fade-out': fadeOut }">
-        <div class="splash-content">
-            <h1><img :src="require('@/assets/img/splash.png')" alt="logo" /></h1>
-        </div>
-    </div>
-</template> -->
 <script>
 import { googleSdkLoaded } from 'vue3-google-login';
 export default {
