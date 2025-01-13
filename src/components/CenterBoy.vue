@@ -1,6 +1,7 @@
 <template>
     <div class="all_box">
         <div class="all_wrap" @click="closeCenterBoy">
+            <div class="top_qr"><img src="@/assets/img/centerboy_qr.png" alt="qr" /></div>
             <h1>
                 아직<br />
                 주문 내역이<br />
@@ -11,7 +12,7 @@
                     <div class="delivery_btn1">배달<br />주문</div>
                 </div>
 
-                <div class="rightBox">
+                <div class="rightBox" @click="delivery_page1">
                     <div class="delivery_btn2">픽업<br />주문</div>
                 </div>
                 <div class="center_wrap">
@@ -60,6 +61,11 @@ export default {
     margin: 0 auto;
 }
 
+.all_box .all_wrap .top_qr {
+    position: absolute;
+    right: 2px;
+}
+
 .all_box .all_wrap .close {
     position: absolute;
     top: 0;
@@ -71,7 +77,7 @@ export default {
     width: 100%;
     top: 303px;
     font-size: 20px;
-    font-weight: 900;
+    font-weight: 700;
     line-height: 27px;
     color: #fff;
     position: absolute;
