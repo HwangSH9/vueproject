@@ -7,6 +7,9 @@
                     <h1>안녕하세요!</h1>
                     <router-link to="/login"><button>로그인</button></router-link>
                 </div>
+                <!--                 <div class="allOrder">
+                    <h1>총 00번<br />주문했습니다!</h1>
+                </div> -->
             </div>
             <div class="top_left_wrap">
                 <router-link to="/mypage">
@@ -150,11 +153,12 @@ export default {
     pointer-events: none;
 }
 
-/* 버튼 및 텍스트 */
+/* (로그인전)버튼 및 텍스트 */
 .main .topWrap .right_wrap {
     position: absolute;
-    right: 0;
-    max-width: 102px;
+    left: 120px;
+    max-width: 120px;
+    width: 50%;
     z-index: 10;
 }
 
@@ -183,6 +187,23 @@ export default {
     z-index: 20;
     position: relative;
     pointer-events: auto;
+}
+
+/* (로그인후)텍스트 */
+.main .topWrap .allOrder {
+    position: absolute;
+    left: 120px;
+    max-width: 120px;
+    width: 50%;
+    z-index: 10;
+}
+
+.main .topWrap .allOrder h1 {
+    text-align: left;
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    letter-spacing: -1px;
 }
 
 /* 상단 좌우 요소 */
