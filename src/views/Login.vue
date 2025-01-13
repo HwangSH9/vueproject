@@ -41,9 +41,11 @@
                     </form>
                     <div class="line"></div>
                     <h3>다른 계정으로 로그인</h3>
-                    <button class="easy_loginBtn" onclick="check_input()">
-                        <span>간편 로그인</span>
-                    </button>
+                    <router-link to="/SocialLogin">
+                        <button class="easy_loginBtn">
+                            <span>간편 로그인</span>
+                        </button>
+                    </router-link>
                     <h4>
                         아직 회원이 아니신가요? <router-link to="/signup"><span>회원가입</span></router-link>
                     </h4>
