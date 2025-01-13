@@ -34,7 +34,7 @@ export default {
         },
         // 새로 추가된 delivery_page1 메서드
         delivery_page1() {
-            window.location.href = '/moreview';
+            window.location.href = '/storesearch';
         }
     }
 };
