@@ -25,7 +25,7 @@
                 </button>
             </div>
             <h4 class="login-links">
-                <router-link to="/login"><span>아이디로 로그인 / </span></router-link>
+                <router-link to="/login"><span>아이디로 로그인</span></router-link> /
                 <router-link to="/signup"><span>회원가입</span></router-link>
             </h4>
         </div>
