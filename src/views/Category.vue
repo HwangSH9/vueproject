@@ -14,7 +14,7 @@
         <div class="grayBox">
             <h2><span>※</span>&nbsp;판매되는 상품은 매장마다 상이합니다.</h2>
             <div class="product_wrap">
-                <router-link to="/guestproductlist"><span>추천메뉴</span></router-link>
+                <router-link to="/guestproductlist"><div class="product best_btn">추천메뉴</div></router-link>
                 <div class="product">버거&세트</div>
                 <div class="product">스낵&사이드</div>
                 <div class="product">음료</div>
@@ -133,7 +133,7 @@ body {
     min-height: 133px;
     margin-bottom: 15px;
     border-radius: 20px;
-    background-color: yellowgreen;
+    background-color: #d9d9d9;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -143,23 +143,37 @@ body {
     font-weight: 900;
     text-align: center;
 }
-
 .grayBox .product_wrap a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-decoration: none;
+}
+
+.grayBox .product_wrap .product:hover {
+    background-color: #7100a0;
+    color: white;
+}
+
+.grayBox .product_wrap .best_btn {
     width: 48%;
-    min-width: 164px;
+    min-width: 224px;
     height: 35%;
     min-height: 133px;
     margin-bottom: 15px;
     border-radius: 20px;
-    background-color: yellowgreen;
+    background-color: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
     color: #494949;
     font-size: 20px;
     font-weight: 900;
     text-align: center;
+    cursor: pointer;
+}
+
+.grayBox .product_wrap .best_btn:hover {
+    background-color: #7100a0;
+    color: white;
 }
 
 .bgbg {
