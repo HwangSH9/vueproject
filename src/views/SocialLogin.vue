@@ -1,4 +1,3 @@
-<!-- 소셜 로그인은 chatgpt 참고하기! -->
 <template>
     <div class="bgbg">
         <button class="back_left" @click="goBack">
@@ -7,25 +6,30 @@
         <div class="splash-content">
             <h1><img :src="require('@/assets/img/splash.png')" alt="logo" /></h1>
         </div>
-            <div class="login_content">
+        <div class="login_content">
+            <div class="easy_login">
                 <h3>간편 로그인</h3>
-                    <div class="social-buttons">
-                        <button class="naver-login">
-                            <img src="../assets/img/naver_btn.png" alt="네이버" />
-                        </button>
-                        <button class="google-login">
-                            <img src="../assets/img/google_btn.png" alt="구글" />
-                        </button>
-                        <button class="kakao-login">
-                            <img src="../assets/img/kakao_btn.png" alt="카카오" />
-                        </button>
-                    </div>    
-                    <h4 class="login-links">
-                        <router-link to="/login"><span>아이디로 로그인 / </span></router-link>
-                        <router-link to="/signup"><span>회원가입</span></router-link>
-                    </h4>
-                </div>
             </div>
+
+            <div class="social-buttons">
+                <button class="naver-login">
+                    <img src="../assets/img/naver_btn.png" alt="네이버" />
+                    <span>네이버로 시작하기</span>
+                </button>
+                <button class="google-login">
+                    <img src="../assets/img/google_btn.png" alt="구글" />
+                    <span>Google 계정으로 로그인</span>
+                </button>
+                <button class="kakao-login">
+                    <img src="../assets/img/kakao_btn.png" alt="카카오" />
+                </button>
+            </div>
+            <h4 class="login-links">
+                <router-link to="/login"><span>아이디로 로그인 / </span></router-link>
+                <router-link to="/signup"><span>회원가입</span></router-link>
+            </h4>
+        </div>
+    </div>
 </template>
 
 <!-- <template>
@@ -196,7 +200,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #2e2e2e;
+    background-color: #262626;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -218,7 +222,7 @@ export default {
     font-family: Arial, Helvetica, sans-serif;
     width: 204px;
     height: 94px;
-    top: 30px;
+    top: 200px;
 }
 
 h1 img {
@@ -228,8 +232,32 @@ h1 img {
     margin: 0 auto;
 }
 
+.login_content {
+    transform: translateY(280px);
+}
 
-.login_content h4 {
+.login_content h3 {
+    font-size: 14px;
+    color: #9b9b9b;
+    text-align: center;
+    margin: 0;
+}
+
+.easy_login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* 전체 화면 너비 */
+    margin-bottom: 27px;
+}
+
+.easy_login::before,
+.easy_login::after {
+    content: '';
+    flex: 1; /* 양옆 선을 동일 비율로 확장 */
+    height: 1px; /* 선 두께 */
+    background-color: #636363; /* 선 색상 */
+    margin: 0 10px; /* 텍스트와 선 사이 간격 */
 }
 
 .social-buttons {
@@ -246,19 +274,46 @@ h1 img {
     margin: 0;
     padding: 0;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
-    background-color: transparent; /* 배경 투명 */
-    width: 80%; /* 버튼의 고정 너비 설정 */
-    max-width: 300px; /* 최대 너비 제한 */
+    width: 100%; /* 버튼의 고정 너비 설정 */
+    max-width: 600px; /* 최대 너비 제한 */
     height: 50px; /* 고정 높이 설정 */
     display: flex;
-    justify-content: flex-start; /* 내부 이미지도 왼쪽 정렬 */
+    justify-content: center; /* 내부 이미지도 왼쪽 정렬 */
     align-items: center;
+    position: relative;
+}
+
+.naver-login {
+    background-color: #03c75a;
+}
+
+.naver-login span {
+    color: #fff;
+    font-size: 16px;
+    transform: translateX(-12px);
+}
+
+.naver-login img {
+    transform: translateX(-80px);
+}
+
+.google-login {
+    background-color: #fff; /* 배경 투명 */
+    border: 1px solid #dadce0;
+}
+
+.google-login span {
+    color: #757575;
+    font-weight: 500;
+    transform: translateX(-12px);
 }
 
 .google-login img {
     width: 100%;
+    border-radius: 5px;
+    transform: translateX(-60px);
 }
 
 .social-buttons img {
@@ -267,9 +322,6 @@ h1 img {
     object-fit: contain;
     margin: 0;
 }
-
-
-
 
 /* 하단 링크 */
 .login-links {
@@ -281,6 +333,11 @@ h1 img {
 
 .login-links a {
     color: #aaa;
+    text-decoration: none;
+}
+
+.login-links a:hover {
+    color: #c2c2c2;
     text-decoration: none;
 }
 </style>
