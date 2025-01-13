@@ -134,6 +134,24 @@ export default {
                 level: 3
             };
             const map = new kakao.maps.Map(container, options);
+            // 현재 위치 가져오기
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude; // 위도
+                    const lng = position.coords.longitude; // 경도
+                    const currentLocation = new kakao.maps.LatLng(lat, lng); // 현재 위치 생성
+                    map.setCenter(currentLocation); // 지도의 중심을 현재 위치로 설정
+
+                    // 현재 위치 마커 추가
+                    const marker = new kakao.maps.Marker({
+                        position: currentLocation, // 현재 위치
+                        map: map // 지도에 표시
+                    });
+                },
+                (error) => {
+                    console.error('위치 정보를 가져올 수 없습니다:', error);
+                }
+            );
         },
         // 매장별 날씨 데이터를 가져오는 함수
         async fetchWeatherData(lat, lon) {
