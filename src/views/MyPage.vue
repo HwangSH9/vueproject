@@ -19,7 +19,7 @@
                             <a href="">배달지</a>
                         </li>
                         <li>
-                            <a href="">현금영수증</a>
+                            <a href="">고객문의</a>
                         </li>
                     </ul>
                 </div>
@@ -94,6 +94,7 @@ export default {
     bottom: 17px;
     right: 17px;
     text-align: center;
+    line-height: 25px;
 }
 
 .conbox2-wrap {
