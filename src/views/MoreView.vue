@@ -34,7 +34,7 @@
                                 data-bs-auto-close="inside"
                                 aria-expanded="false"
                             >
-                                <span>고객문의</span>
+                                <span>FAQ</span>
                             </button>
                         </div>
                         <div class="btn-group">
